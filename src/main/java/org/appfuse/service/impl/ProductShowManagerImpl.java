@@ -8,10 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
  
 import javax.jws.WebService;
+import javax.jws.WebMethod;
 import java.util.List;
  
 @Service("productShowManager")
-@WebService(serviceName = "ProductService")
+@WebService(serviceName = "ProductShowService")
 public class ProductShowManagerImpl extends GenericManagerImpl<Product, Long> implements ProductShowManager {
     ProductDao productDao;
  
@@ -23,7 +24,9 @@ public class ProductShowManagerImpl extends GenericManagerImpl<Product, Long> im
         this.productDao = productDao;
     }
  
-    public void sayHi() {
+    @WebMethod
+    public int sayHi() {
         System.out.println("Hi, Renascence!");
+        return 1000;
     }
 }

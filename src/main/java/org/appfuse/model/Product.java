@@ -9,7 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Column;
  
-@Entity @Table(name="product")
+@Entity 
+@Table(name="product")
 public class Product extends BaseObject {
     private Long id;
     private String name;

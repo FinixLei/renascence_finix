@@ -7,9 +7,10 @@ import javax.jws.WebService;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+
 import java.util.List;
- 
-@WebService
+
 @Path("/commodity/product")
 public interface ProductShowManager extends GenericManager<Product, Long> {
  
@@ -20,5 +21,6 @@ public interface ProductShowManager extends GenericManager<Product, Long> {
     */
  
     @GET
-    void sayHi();
+    @Produces("application/json")
+    int sayHi();
 }
