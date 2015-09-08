@@ -196,7 +196,7 @@
 
     <servlet-mapping>
         <servlet-name>CXFServlet</servlet-name>
-        <url-pattern>/services/*</url-pattern>
+        <url-pattern>/renascence_finix/*</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
