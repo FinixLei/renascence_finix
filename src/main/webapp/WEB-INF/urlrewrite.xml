@@ -9,8 +9,8 @@
     </rule>
     <!-- The following fixes a CSS bug in CXF. -->
     <rule match-type="regex">
-        <from>^/services//(.*)$</from>
-        <to type="forward">/services/$1</to>
+        <from>^/renascence_finix//(.*)$</from>
+        <to type="forward">/renascence_finix/$1</to>
     </rule>
 
     <!-- Add rules here for anything that shouldn't be served up by Spring MVC. -->
@@ -31,8 +31,8 @@
         <to>/dwr/$1</to>
     </rule>
     <rule>
-        <from>/services/**</from>
-        <to>/services/$1</to>
+        <from>/renascence_finix/**</from>
+        <to>/renascence_finix/$1</to>
     </rule>
     <rule>
         <from>/common/**</from>
