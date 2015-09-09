@@ -16,7 +16,15 @@ public class ProductDaoHibernate extends GenericDaoHibernate<Product, Long> impl
         super(Product.class);
     }
     
-    public int getCategoryOne(Long id) {
-        return 100; // getSession().createCriteria(Product.class).add(Restrictions.eq("category_1", id));
+    public List getSpecifiedItems() {
+        String strQuery = "SELECT product.id as pid, product.name, item.price, item.id as itemid, item.pictures "
+                + "FROM product JOIN item "
+                + "WHERE product.id = item.product_id "
+                + "AND category_1 = 200 "
+                + "AND category_2 = 2001 "
+                + "ORDER BY shelf_time DESC;";
+
+        org.hibernate.Query query = getSession().createSQLQuery(strQuery);
+        return query.list();
     }
 }

@@ -22,5 +22,5 @@ public interface ProductShowManager extends GenericManager<Product, Long> {
  
     @GET
     @Produces("application/json")
-    int sayHi();
+    List getItemsByCategories();
 }

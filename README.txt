@@ -18,3 +18,8 @@ To get started, please complete the following steps:
 
    http://appfuse.org/display/APF/AppFuse+QuickStart
 
+--------------------------------------------------------------------------------
+Restful API samples:
+
+curl http://localhost:8080/renascence_finix/commodity/product
+

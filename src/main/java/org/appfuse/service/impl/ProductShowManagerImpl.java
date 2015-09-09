@@ -25,8 +25,8 @@ public class ProductShowManagerImpl extends GenericManagerImpl<Product, Long> im
     }
  
     @WebMethod
-    public int sayHi() {
-        System.out.println("Hi, Renascence!");
-        return 1000;
+    public List getItemsByCategories() {
+        List item_list = productDao.getSpecifiedItems();
+        return item_list;
     }
 }
