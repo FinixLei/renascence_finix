@@ -2,6 +2,7 @@ package org.appfuse.service;
  
 import org.appfuse.service.GenericManager;
 import org.appfuse.model.Product;
+import org.appfuse.model.SelectedItem;
  
 import javax.jws.WebService;
 import javax.ws.rs.GET;
@@ -14,13 +15,7 @@ import java.util.List;
 @Path("/commodity/product")
 public interface ProductShowManager extends GenericManager<Product, Long> {
  
-    /*
-    @GET
-    @Path("{lastname}")
-    List<Product> findByLastName(@PathParam("lastname") String lastName);
-    */
- 
     @GET
     @Produces("application/json")
-    List getItemsByCategories();
+    List<SelectedItem> getItemsByCategories();
 }

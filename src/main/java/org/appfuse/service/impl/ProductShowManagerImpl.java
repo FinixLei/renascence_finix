@@ -3,6 +3,7 @@ package org.appfuse.service.impl;
 import org.appfuse.service.impl.GenericManagerImpl;
 import org.appfuse.dao.ProductDao;
 import org.appfuse.model.Product;
+import org.appfuse.model.SelectedItem;
 import org.appfuse.service.ProductShowManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,8 +26,17 @@ public class ProductShowManagerImpl extends GenericManagerImpl<Product, Long> im
     }
  
     @WebMethod
-    public List getItemsByCategories() {
-        List item_list = productDao.getSpecifiedItems();
+    public List<SelectedItem> getItemsByCategories() {
+        List<SelectedItem> item_list = productDao.getSpecifiedItems();
+        
+        for (SelectedItem si: item_list) {
+            System.out.println(si.getItem_id());
+            System.out.println(si.getProduct_id());
+            System.out.println(si.getPrice());
+            System.out.println(si.getProduct_name());
+            System.out.println(si.getItem_picture());
+        }
+        
         return item_list;
     }
 }
