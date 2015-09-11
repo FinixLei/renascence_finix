@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.math.BigInteger;
 import java.math.BigDecimal;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONArray;
  
 import org.appfuse.dao.hibernate.GenericDaoHibernate;
 import org.appfuse.model.Product;
@@ -12,6 +16,7 @@ import org.appfuse.model.SelectedItem;
 import org.appfuse.dao.ProductDao;
  
 import org.hibernate.criterion.Restrictions;
+import org.json.JSONObject;
 import org.hibernate.SQLQuery;
 import org.hibernate.Criteria;
 import org.springframework.stereotype.Repository;
@@ -23,7 +28,7 @@ public class ProductDaoHibernate extends GenericDaoHibernate<Product, Long> impl
         super(Product.class);
     }
     
-    public List<SelectedItem> getSpecifiedItems() {
+    public JSONArray getSpecifiedItems() {
         String strQuery = "SELECT product.id as product_id,"
                 + " product.name as product_name,"
                 + " item.price as item_price,"
@@ -39,22 +44,32 @@ public class ProductDaoHibernate extends GenericDaoHibernate<Product, Long> impl
         query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
         List raw_result_set = query.list();
         
-        List<SelectedItem> result_set = new ArrayList<SelectedItem>();
+        JSONArray jsonArray = new JSONArray();
         Map<String, Object> row = null;
         
+        int count = 0;
+        System.out.println("init count = " + count);
         for (Object object : raw_result_set) {
-             row = (Map<String, Object>)object;
+            System.out.println("count = " + count);
+            
+            row = (Map<String, Object>)object;
              
-             SelectedItem sitm = new SelectedItem();
-             sitm.setItem_id((BigInteger)row.get("item_id"));
-             sitm.setProduct_id((Integer)row.get("product_id"));
-             sitm.setPrice((BigDecimal)row.get("item_price"));
-             sitm.setProduct_name((String)row.get("product_name"));
-             sitm.setItem_picture((String)row.get("item_picture_url"));    
-             
-             result_set.add(sitm);
+            JSONObject jsonObj = new JSONObject();
+            try {
+                jsonObj.put("item_id",          (BigInteger)row.get("item_id"));
+                jsonObj.put("product_id",       (Integer)row.get("product_id"));
+                jsonObj.put("item_price",       (BigDecimal)row.get("item_price"));
+                jsonObj.put("product_name",     (String)row.get("product_name"));
+                jsonObj.put("item_picture_url", (String)row.get("item_picture_url"));
+                 
+                jsonArray.put(jsonObj);
+             }
+            catch(JSONException je) {
+                // To do
+                System.out.println("JSON Exception: " + je.getMessage());
+             }
         }
         
-        return result_set;
+        return jsonArray;
     }
 }

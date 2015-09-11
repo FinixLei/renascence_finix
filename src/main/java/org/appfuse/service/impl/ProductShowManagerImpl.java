@@ -7,9 +7,16 @@ import org.appfuse.model.SelectedItem;
 import org.appfuse.service.ProductShowManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONException;
  
 import javax.jws.WebService;
 import javax.jws.WebMethod;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import java.util.List;
 
 import org.json.JSONObject;
@@ -28,17 +35,20 @@ public class ProductShowManagerImpl extends GenericManagerImpl<Product, Long> im
     }
  
     @WebMethod
-    public List<SelectedItem> getItemsByCategories() {
-        List<SelectedItem> item_list = productDao.getSpecifiedItems();
+    public Response getItemsByCategories() {
+        JSONArray jsonArray = productDao.getSpecifiedItems();
         
-        for (SelectedItem si: item_list) {
-            System.out.println(si.getItem_id());
-            System.out.println(si.getProduct_id());
-            System.out.println(si.getPrice());
-            System.out.println(si.getProduct_name());
-            System.out.println(si.getItem_picture());
+        int size = jsonArray.length();
+        System.out.println("Size is " + size);
+        for(int i=0; i<size; i++) {
+            try {
+                JSONObject jsonObj = jsonArray.getJSONObject(i);
+            }
+            catch(JSONException je) {
+                // To do
+            }
         }
         
-        return item_list;
+        return Response.ok(jsonArray.toString(), MediaType.APPLICATION_JSON).build();
     }
 }
