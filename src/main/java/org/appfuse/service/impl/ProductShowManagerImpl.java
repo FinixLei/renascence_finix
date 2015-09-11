@@ -14,6 +14,7 @@ import org.json.JSONException;
  
 import javax.jws.WebService;
 import javax.jws.WebMethod;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -35,17 +36,30 @@ public class ProductShowManagerImpl extends GenericManagerImpl<Product, Long> im
     }
  
     @WebMethod
-    public Response getItemsByCategories() {
+    public Response getItemsByCategories(
+            int category_1,
+            int category_2,
+            String sortby,
+            int start,
+            int amount) {
+        
+        System.out.println("Get Here!!!!!!!");
+        System.out.println("category_1 = " + category_1);
+        System.out.println("category_2 = " + category_2);
+        System.out.println("sortby = " + sortby);
+        System.out.println("start = " + start);
+        System.out.println("amount = " + amount);
+        
         JSONArray jsonArray = productDao.getSpecifiedItems();
         
         int size = jsonArray.length();
-        System.out.println("Size is " + size);
         for(int i=0; i<size; i++) {
             try {
                 JSONObject jsonObj = jsonArray.getJSONObject(i);
             }
             catch(JSONException je) {
                 // To do
+                System.out.println("JSON Exception: " + je.getMessage());
             }
         }
         
