@@ -40,17 +40,10 @@ public class ProductShowManagerImpl extends GenericManagerImpl<Product, Long> im
             int category_1,
             int category_2,
             String sortby,
+            String isDesc,
             int start,
             int amount) {
-        
-        System.out.println("Get Here!!!!!!!");
-        System.out.println("category_1 = " + category_1);
-        System.out.println("category_2 = " + category_2);
-        System.out.println("sortby = " + sortby);
-        System.out.println("start = " + start);
-        System.out.println("amount = " + amount);
-        
-        JSONArray jsonArray = productDao.getSpecifiedItems();
+        JSONArray jsonArray = productDao.getSpecifiedItems(category_1, category_2, sortby, isDesc);
         
         int size = jsonArray.length();
         for(int i=0; i<size; i++) {

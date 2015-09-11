@@ -26,6 +26,7 @@ public interface ProductShowManager extends GenericManager<Product, Long> {
             @QueryParam("category_1") int category_1,
             @QueryParam("category_2") int category_2,
             @QueryParam("sortby") String sortby,
+            @QueryParam("desc") String isDesc,
             @QueryParam("start") int start,
             @QueryParam("amount") int amount);
 }

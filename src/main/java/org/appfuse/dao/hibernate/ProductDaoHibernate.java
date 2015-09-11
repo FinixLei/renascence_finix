@@ -28,7 +28,21 @@ public class ProductDaoHibernate extends GenericDaoHibernate<Product, Long> impl
         super(Product.class);
     }
     
-    public JSONArray getSpecifiedItems() {
+    public JSONArray getSpecifiedItems(
+            int category_1, 
+            int category_2, 
+            String sortby, 
+            String isDesc
+            ) {
+        String sortOrder = "DESC"; 
+        if(isDesc.toLowerCase().equals("false")) {
+            sortOrder = "ASC"; 
+        }
+        
+        if(sortby.toLowerCase().equals("price")) {
+            sortby = "item_price";
+        }
+        
         String strQuery = "SELECT product.id as product_id,"
                 + " product.name as product_name,"
                 + " item.price as item_price,"
@@ -36,9 +50,10 @@ public class ProductDaoHibernate extends GenericDaoHibernate<Product, Long> impl
                 + " item.pictures as item_picture_url"
                 + " FROM product JOIN item"
                 + " WHERE product.id = item.product_id"
-                + " AND category_1 = 200"
-                + " AND category_2 = 2001"
-                + " ORDER BY shelf_time DESC;";
+                + " AND category_1 = " + category_1
+                + " AND category_2 = " + category_2
+                + " ORDER BY " + sortby 
+                + " " + sortOrder + ";";
         
         SQLQuery query = getSession().createSQLQuery(strQuery);
         query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
@@ -47,14 +62,10 @@ public class ProductDaoHibernate extends GenericDaoHibernate<Product, Long> impl
         JSONArray jsonArray = new JSONArray();
         Map<String, Object> row = null;
         
-        int count = 0;
-        System.out.println("init count = " + count);
         for (Object object : raw_result_set) {
-            System.out.println("count = " + count);
-            
             row = (Map<String, Object>)object;
-             
             JSONObject jsonObj = new JSONObject();
+            
             try {
                 jsonObj.put("item_id",          (BigInteger)row.get("item_id"));
                 jsonObj.put("product_id",       (Integer)row.get("product_id"));
