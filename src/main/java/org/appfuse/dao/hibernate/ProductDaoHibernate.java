@@ -42,7 +42,7 @@ public class ProductDaoHibernate extends GenericDaoHibernate<Product, Long> impl
         if(sortby.toLowerCase().equals("price")) {
             sortby = "item_price";
         }
-        
+
         String strQuery = "SELECT product.id as product_id,"
                 + " product.name as product_name,"
                 + " item.price as item_price,"
@@ -50,15 +50,17 @@ public class ProductDaoHibernate extends GenericDaoHibernate<Product, Long> impl
                 + " item.pictures as item_picture_url"
                 + " FROM product JOIN item"
                 + " WHERE product.id = item.product_id"
-                + " AND category_1 = " + category_1
-                + " AND category_2 = " + category_2
+                + " AND category_first_level_id = " + category_1
+                + " AND category_second_level_id = " + category_2
                 + " ORDER BY " + sortby 
                 + " " + sortOrder + ";";
+        
+        System.out.println("SQL Query = " + strQuery);
         
         SQLQuery query = getSession().createSQLQuery(strQuery);
         query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
         List raw_result_set = query.list();
-        
+
         JSONArray jsonArray = new JSONArray();
         Map<String, Object> row = null;
         
@@ -80,7 +82,6 @@ public class ProductDaoHibernate extends GenericDaoHibernate<Product, Long> impl
                 System.out.println("JSON Exception: " + je.getMessage());
              }
         }
-        
         return jsonArray;
     }
 }
