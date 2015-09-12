@@ -49,20 +49,3 @@ CREATE TABLE `product` (
   `category_second_level_id` mediumint(8) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO item (merchant_id, product_id, name, price, shelf_time, total_count, current_count, type, state) 
-VALUES (1, 1, 'item_1', 3999, '2015-09-07 13:00:12', 0, 0, 1, 1);
-INSERT INTO item (merchant_id, product_id, name, price, shelf_time, total_count, current_count, type, state) 
-VALUES (1, 2, 'item_2', 4999, '2015-09-07 14:00:12', 0, 0, 1, 1);
-INSERT INTO item (merchant_id, product_id, name, price, shelf_time, total_count, current_count, type, state) 
-VALUES (2, 3, 'item_3', 5999, '2015-09-07 15:00:12', 0, 0, 1, 1);
-
-INSERT INTO product (name, category_first_level_id, category_second_level_id, sku_count) VALUES ('Envy 1000', 100, 1001, 10);
-INSERT INTO product (name, category_first_level_id, category_second_level_id, sku_count) VALUES ('Envy 2000', 200, 2001, 10);
-INSERT INTO product (name, category_first_level_id, category_second_level_id, sku_count) VALUES ('Envy 3000', 200, 2001, 10);
-
-SELECT * FROM product INNER JOIN item
-WHERE product.id = item.product_id
-AND category_first_level_id = 200 
-AND category_second_level_id = 2001
-ORDER BY shelf_time DESC;
