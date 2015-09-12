@@ -34,12 +34,24 @@ public class ProductDaoHibernate extends GenericDaoHibernate<Product, Long> impl
             String sortby, 
             String isDesc
             ) {
-        String sortOrder = "DESC"; 
-        if(isDesc.toLowerCase().equals("false")) {
+        String sortOrder = "DESC";
+        if (isDesc == null) {
+               isDesc = "false";
+        } else if (isDesc.toLowerCase().equals("false")) {
             sortOrder = "ASC"; 
+        } else if (isDesc.toLowerCase().equals("true")) {
+            sortOrder = "DESC";
+        } else {
+            sortOrder = "ASC";
         }
         
-        if(sortby.toLowerCase().equals("price")) {
+        if (sortby == null) {
+            sortby = "price";
+        } else if (sortby.toLowerCase().equals("price")) {
+            sortby = "item_price";
+        } else if (sortby.toLowerCase().equals("shelf_time")) {
+            sortby = "shelf_time";
+        } else {
             sortby = "item_price";
         }
 
