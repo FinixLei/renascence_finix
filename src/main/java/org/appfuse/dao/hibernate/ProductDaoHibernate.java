@@ -1,7 +1,6 @@
 package org.appfuse.dao.hibernate;
  
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Map;
 import java.math.BigInteger;
 import java.math.BigDecimal;
@@ -12,11 +11,8 @@ import org.json.JSONArray;
  
 import org.appfuse.dao.hibernate.GenericDaoHibernate;
 import org.appfuse.model.Product;
-import org.appfuse.model.SelectedItem;
 import org.appfuse.dao.ProductDao;
  
-import org.hibernate.criterion.Restrictions;
-import org.json.JSONObject;
 import org.hibernate.SQLQuery;
 import org.hibernate.Criteria;
 import org.springframework.stereotype.Repository;

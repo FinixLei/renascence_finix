@@ -3,7 +3,6 @@ package org.appfuse.service.impl;
 import org.appfuse.service.impl.GenericManagerImpl;
 import org.appfuse.dao.ProductDao;
 import org.appfuse.model.Product;
-import org.appfuse.model.SelectedItem;
 import org.appfuse.service.ProductShowManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,13 +13,9 @@ import org.json.JSONException;
  
 import javax.jws.WebService;
 import javax.jws.WebMethod;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import java.util.List;
-
-import org.json.JSONObject;
  
 @Service("productShowManager")
 @WebService(serviceName = "ProductShowService")
@@ -44,11 +39,13 @@ public class ProductShowManagerImpl extends GenericManagerImpl<Product, Long> im
             int start,
             int amount) {
         JSONArray jsonArray = productDao.getSpecifiedItems(category_1, category_2, sortby, isDesc);
+        JSONArray resultArray = new JSONArray();
         
-        int size = jsonArray.length();
-        for(int i=0; i<size; i++) {
+        int size = Math.min(jsonArray.length(), start + amount);
+        for (int i=start; i<size; i++) {
             try {
                 JSONObject jsonObj = jsonArray.getJSONObject(i);
+                resultArray.put(jsonObj);
             }
             catch(JSONException je) {
                 // To do
@@ -56,6 +53,6 @@ public class ProductShowManagerImpl extends GenericManagerImpl<Product, Long> im
             }
         }
         
-        return Response.ok(jsonArray.toString(), MediaType.APPLICATION_JSON).build();
+        return Response.ok(resultArray.toString(), MediaType.APPLICATION_JSON).build();
     }
 }
