@@ -21,5 +21,4 @@ To get started, please complete the following steps:
 --------------------------------------------------------------------------------
 Restful API samples:
 
-curl http://localhost:8080/renascence_finix/commodity/product
-
+curl http://localhost:8080/renascence_finix/commodity/product?category_1=200&category_2=2001&sortby=price&desc=false&start=1&amount=5
