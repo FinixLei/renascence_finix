@@ -1,4 +1,4 @@
-AppFuse Basic Spring MVC Archetype
+# AppFuse Basic Spring MVC Archetype
 --------------------------------------------------------------------------------
 If you're reading this then you've created your new project using Maven and
 renascence_finix.  You have only created the shell of an AppFuse Java EE
@@ -14,11 +14,10 @@ To get started, please complete the following steps:
 
 2. Run "mvn jetty:run" and view the application at http://localhost:8080.
 
-3. More information can be found at:
-
-   http://appfuse.org/display/APF/AppFuse+QuickStart
+3. More information can be found at:  
+   <http://appfuse.org/display/APF/AppFuse+QuickStart/>
 
 --------------------------------------------------------------------------------
-Restful API samples:
+## Restful API samples:
 
-curl http://localhost:8080/renascence_finix/commodity/product?category_1=200&category_2=2001&sortby=price&desc=false&start=1&amount=5
+curl <http://localhost:8080/renascence_finix/commodity/product?category_1=200&category_2=2001&sortby=price&desc=false&start=1&amount=5/>
