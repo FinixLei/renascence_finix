@@ -1,16 +1,17 @@
 package org.appfuse.dao.hibernate;
  
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.HashMap;
 import java.math.BigInteger;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONArray;
- 
 import org.appfuse.dao.hibernate.GenericDaoHibernate;
 import org.appfuse.model.Product;
+import org.appfuse.model.PuUnit;
+import org.appfuse.model.ItemUnit;
 import org.appfuse.dao.ProductDao;
  
 import org.hibernate.SQLQuery;
@@ -24,44 +25,22 @@ public class ProductDaoHibernate extends GenericDaoHibernate<Product, Long> impl
         super(Product.class);
     }
     
-    public JSONArray getSpecifiedItems(
+    public List<PuUnit> getSpecifiedItems(
             int category_1, 
-            int category_2, 
-            String sortby, 
-            String isDesc
+            int category_2
             ) {
-        String sortOrder = "DESC";
-        if (isDesc == null) {
-               isDesc = "false";
-        } else if (isDesc.toLowerCase().equals("false")) {
-            sortOrder = "ASC"; 
-        } else if (isDesc.toLowerCase().equals("true")) {
-            sortOrder = "DESC";
-        } else {
-            sortOrder = "ASC";
-        }
-        
-        if (sortby == null) {
-            sortby = "price";
-        } else if (sortby.toLowerCase().equals("price")) {
-            sortby = "item_price";
-        } else if (sortby.toLowerCase().equals("shelf_time")) {
-            sortby = "shelf_time";
-        } else {
-            sortby = "item_price";
-        }
-
-        String strQuery = "SELECT product.id as product_id,"
-                + " product.name as product_name,"
+        String strQuery = "SELECT product.id as pu_id,"
+                + " product.name as pu_name,"
+                + " product.description as pu_desc,"
                 + " item.price as item_price,"
                 + " item.id as item_id,"
-                + " item.pictures as item_picture_url"
+                + " item.pictures as pic_url,"
+                + " item.shelf_time as shelf_time"
                 + " FROM product JOIN item"
                 + " WHERE product.id = item.product_id"
                 + " AND category_first_level_id = " + category_1
-                + " AND category_second_level_id = " + category_2
-                + " ORDER BY " + sortby 
-                + " " + sortOrder + ";";
+                + " AND category_second_level_id = " + category_2 
+                + ";";
         
         System.out.println("SQL Query = " + strQuery);
         
@@ -69,27 +48,67 @@ public class ProductDaoHibernate extends GenericDaoHibernate<Product, Long> impl
         query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
         List raw_result_set = query.list();
 
-        JSONArray jsonArray = new JSONArray();
-        Map<String, Object> row = null;
+        Map<String, Object> row = null;        
+        Map<Integer, PuUnit> pus_map = new HashMap<Integer, PuUnit>();
         
         for (Object object : raw_result_set) {
-            row = (Map<String, Object>)object;
-            JSONObject jsonObj = new JSONObject();
-            
             try {
-                jsonObj.put("item_id",          (BigInteger)row.get("item_id"));
-                jsonObj.put("product_id",       (Integer)row.get("product_id"));
-                jsonObj.put("item_price",       (BigDecimal)row.get("item_price"));
-                jsonObj.put("product_name",     (String)row.get("product_name"));
-                jsonObj.put("item_picture_url", (String)row.get("item_picture_url"));
-                 
-                jsonArray.put(jsonObj);
+                row = (Map<String, Object>)object;
+                
+                BigInteger item_id = (BigInteger)row.get("item_id");
+                String pic_url = (String)row.get("pic_url");
+                BigDecimal item_price = (BigDecimal)row.get("item_price");
+                Timestamp shelf_time = (Timestamp)row.get("shelf_time");
+                
+                Integer pu_id = (Integer)row.get("pu_id");
+                String pu_name = (String)row.get("pu_name");
+                String pu_desc = (String)row.get("pu_desc");
+                
+                ItemUnit item = new ItemUnit();
+                item.setItem_id(item_id);                
+                item.setPic_url(pic_url);
+                item.setItem_price(item_price);
+                item.setShelf_time(shelf_time);
+                
+                if (pus_map.get(pu_id) == null) {
+                    PuUnit pu = new PuUnit();
+                    pu.setPu_id(pu_id);
+                    pu.setPu_name(pu_name);
+                    pu.setPu_desc(pu_desc);
+                    pu.setPu_price(item_price);
+                    pu.setPu_shelf_time(shelf_time);
+
+                    List<ItemUnit> item_list = new ArrayList<ItemUnit>(); 
+                    item_list.add(item);
+                    pu.setItem_list(item_list);
+                    
+                    pus_map.put(pu_id, pu);
+                } else {
+                    PuUnit pu = pus_map.get(pu_id);
+                    List<ItemUnit> item_list = pu.getItem_list(); 
+                    item_list.add(item);
+                    
+                    if (item_price.compareTo(pu.getPu_price()) < 0) {
+                        pu.setPu_price(item_price);
+                    }
+                    
+                    if (shelf_time.compareTo(pu.getPu_shelf_time()) > 0) { // newer
+                        pu.setPu_shelf_time(shelf_time);
+                    }
+                }
              }
-            catch(JSONException je) {
+            catch(Exception ex) {
                 // To do
-                System.out.println("JSON Exception: " + je.getMessage());
+                System.out.println("HELLO JSON Exception: " + ex.getMessage());
              }
         }
-        return jsonArray;
+        
+        List<PuUnit> return_set = new ArrayList<PuUnit>();
+        
+        for (Integer key : pus_map.keySet()) {
+            return_set.add(pus_map.get(key));
+        }
+        
+        return return_set;
     }
 }

@@ -12,88 +12,79 @@ import javax.persistence.Column;
 @Entity 
 @Table(name="product")
 public class Product extends BaseObject {
-    private Long id;
+    private Integer id;
     private String name;
-    private int category_1;
-    private int category_2;
-    private int category_3;
+    private int category_first_level_id;
+    private int category_second_level_id;
     private String description;
     private byte sku_count;
     
+    private static final long serialVersionUID = 534638596;
+    
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
     
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     @Column(name="name", length=255)
     public String getName() {
         return name;
     }
-    
+
     public void setName(String name) {
         this.name = name;
     }
-    
-    @Column(name="category_1")
-    public int getCategory_1() {
-        return category_1;
+
+    public int getCategory_first_level_id() {
+        return category_first_level_id;
     }
-    
-    public void setCategory_1(int category_1) {
-        this.category_1 = category_1;
+
+    public void setCategory_first_level_id(int category_first_level_id) {
+        this.category_first_level_id = category_first_level_id;
     }
-    
-    @Column(name="category_2")
-    public int getCategory_2() {
-        return category_2;
+
+    public int getCategory_second_level_id() {
+        return category_second_level_id;
     }
-    
-    public void setCategory_2(int category_2) {
-        this.category_2 = category_2;
+
+    public void setCategory_second_level_id(int category_second_level_id) {
+        this.category_second_level_id = category_second_level_id;
     }
-    
-    @Column(name="category_3")
-    public int getCategory_3() {
-        return category_3;
-    }
-    
-    public void setCategory_3(int category_3) {
-        this.category_3 = category_3;
-    }
-    
+
     @Column(name="description", length=1024)
     public String getDescription() {
         return description;
     }
-    
+
     public void setDescription(String description) {
         this.description = description;
     }
-    
-    @Column(name="sku_count")
+
     public byte getSku_count() {
         return sku_count;
     }
-    
+
     public void setSku_count(byte sku_count) {
         this.sku_count = sku_count;
     }
-    
-    
+
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + category_1;
-        result = prime * result + category_2;
-        result = prime * result + category_3;
+        result = prime * result + category_first_level_id;
+        result = prime * result + category_second_level_id;
         result = prime * result + ((description == null) ? 0 : description.hashCode());
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         result = prime * result + sku_count;
         return result;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -103,11 +94,9 @@ public class Product extends BaseObject {
         if (getClass() != obj.getClass())
             return false;
         Product other = (Product) obj;
-        if (category_1 != other.category_1)
+        if (category_first_level_id != other.category_first_level_id)
             return false;
-        if (category_2 != other.category_2)
-            return false;
-        if (category_3 != other.category_3)
+        if (category_second_level_id != other.category_second_level_id)
             return false;
         if (description == null) {
             if (other.description != null)
@@ -128,11 +117,12 @@ public class Product extends BaseObject {
             return false;
         return true;
     }
-    
+
     @Override
     public String toString() {
-        return "Product [id=" + id + ", name=" + name + ", category_1=" + category_1 + ", category_2=" + category_2
-                + ", category_3=" + category_3 + ", description=" + description + ", sku_count=" + sku_count + "]";
+        return "Product [id=" + id + ", name=" + name + ", category_first_level_id=" + category_first_level_id
+                + ", category_second_level_id=" + category_second_level_id + ", description=" + description
+                + ", sku_count=" + sku_count + "]";
     }
-    
+
 }

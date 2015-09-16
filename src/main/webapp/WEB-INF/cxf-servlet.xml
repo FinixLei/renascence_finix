@@ -23,6 +23,7 @@
         <jaxrs:serviceBeans>
             <ref bean="userManager"/>
             <ref bean="productShowManager"/>
+            <ref bean="categoryManager"/>
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <ref bean="jsonProvider"/>

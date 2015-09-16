@@ -1,9 +1,10 @@
 package org.appfuse.dao;
 
+import java.util.List;
 import org.appfuse.model.Product;
-import org.json.JSONArray;
+import org.appfuse.model.PuUnit;
 
 
 public interface ProductDao extends GenericDao<Product, Long> {
-    public JSONArray getSpecifiedItems(int category_1, int category_2, String sortby, String isDesc); 
+    public List<PuUnit> getSpecifiedItems(int category_1, int category_2); 
 }
