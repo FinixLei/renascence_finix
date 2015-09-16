@@ -162,7 +162,7 @@ None
 * 500 Internal Server Error. Server has logic errors. 
 
 #### Return Body
-
+<pre><code>
     [
         {
             'id': integer,
@@ -177,7 +177,7 @@ None
         },
         ...
     ]
-
+</code></pre>
 
 #### Sample:  
 curl <http://localhost:8080/renascence_finix/commodity/category>
