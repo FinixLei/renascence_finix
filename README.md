@@ -197,3 +197,24 @@ curl <http://localhost:8080/renascence_finix/commodity/category>
 
 - Step 5. Run curl command to try the APIs. 
 
+-------------------------------------------------------
+# Steps for adding one RESTFUL API
+
+*Below is the example for constructing API-2 (list all the categories) above.*
+
+1. In model package, add CategoryFirstLevel.java and CategorySecondLevel.java;
+
+2. In dao package, add CategoryFirstLevelDao.java and CategorySecondLevelDao.java;
+
+3. In dao.hibernate package, add CategoryFirstLevelDaoHibernate.java and CategorySecondLevelDaoHibernate.java;
+
+4. In service package, add CategoryManager.java
+
+5. In service.impl package, add CategoryManagerImpl.java
+
+6. In WEB-INF folder, add one "serviceBean" to cxf-servlet.xml
+
+*OK, One Restful Web Service is done.*
+
+
+
