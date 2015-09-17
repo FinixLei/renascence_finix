@@ -56,13 +56,21 @@ public class ProductDaoHibernate extends GenericDaoHibernate<Product, Long> impl
                 row = (Map<String, Object>)object;
                 
                 BigInteger item_id = (BigInteger)row.get("item_id");
-                String pic_url = (String)row.get("pic_url");
+                String str_pic_url = (String)row.get("pic_url");
                 BigDecimal item_price = (BigDecimal)row.get("item_price");
                 Timestamp shelf_time = (Timestamp)row.get("shelf_time");
                 
                 Integer pu_id = (Integer)row.get("pu_id");
                 String pu_name = (String)row.get("pu_name");
                 String pu_desc = (String)row.get("pu_desc");
+                
+                String delimiter = "\n"; 
+                String[] pic_url = {};
+                if (str_pic_url.contains(delimiter)) {
+                    pic_url = str_pic_url.split(delimiter);
+                } else {
+                    pic_url[0] = str_pic_url;
+                }
                 
                 ItemUnit item = new ItemUnit();
                 item.setItem_id(item_id);                

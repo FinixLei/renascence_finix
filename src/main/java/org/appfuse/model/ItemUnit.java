@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 public class ItemUnit {
     private BigInteger item_id;
     private BigDecimal item_price;
-    private String pic_url;
+    private String[] pic_url;
     private Timestamp shelf_time;
     
     public BigInteger getItem_id() {
@@ -22,10 +22,10 @@ public class ItemUnit {
     public void setItem_price(BigDecimal item_price) {
         this.item_price = item_price;
     }
-    public String getPic_url() {
+    public String[] getPic_url() {
         return pic_url;
     }
-    public void setPic_url(String pic_url) {
+    public void setPic_url(String[] pic_url) {
         this.pic_url = pic_url;
     }
     public Timestamp getShelf_time() {
@@ -39,6 +39,4 @@ public class ItemUnit {
         return "ItemUnit [item_id=" + item_id + ", item_price=" + item_price + ", pic_url=" + pic_url + ", shelf_time="
                 + shelf_time + "]";
     }
-    
-    
 }
