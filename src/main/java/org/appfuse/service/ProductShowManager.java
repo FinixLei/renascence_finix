@@ -1,7 +1,7 @@
 package org.appfuse.service;
 
+import org.appfuse.model.product_list_handler.Product;
 import org.appfuse.service.GenericManager;
-import org.appfuse.model.Product;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

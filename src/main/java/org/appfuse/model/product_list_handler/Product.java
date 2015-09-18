@@ -1,4 +1,4 @@
-package org.appfuse.model;
+package org.appfuse.model.product_list_handler;
 
 import org.appfuse.model.BaseObject;
  

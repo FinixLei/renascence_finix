@@ -1,4 +1,4 @@
-package org.appfuse.model;
+package org.appfuse.model.product_list_handler;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
