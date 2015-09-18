@@ -2,7 +2,6 @@ package org.appfuse.model.product_list_handler;
 
 import java.util.List;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.sql.Timestamp;
 
 

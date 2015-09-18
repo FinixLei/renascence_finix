@@ -1,14 +1,11 @@
 package org.appfuse.dao.hibernate;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.appfuse.dao.hibernate.GenericDaoHibernate;
-import org.appfuse.model.CategoryFirstLevel;
 import org.appfuse.model.CategorySecondLevel;
-import org.appfuse.model.CategoryUnit;
 import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
 import org.appfuse.dao.CategorySecondLevelDao;
