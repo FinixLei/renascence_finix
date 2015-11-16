@@ -202,25 +202,25 @@ curl <http://localhost:8080/renascence_finix/commodity/category>
 
 *Below is the example for constructing API-2 (list all the categories) above.*
 
-1. In model package, add CategoryFirstLevel.java and CategorySecondLevel.java;
+1. In model package, add CategoryFirstLevel.java and CategorySecondLevel.java;  
    This is to use @Entity, @Table, @Id, @Column and some other JPA annotations to create DB schema. 
 
-2. In dao package, add CategoryFirstLevelDao.java and CategorySecondLevelDao.java;
-   They are interface, which extends GenericDao. 
+2. In dao package, add CategoryFirstLevelDao.java and CategorySecondLevelDao.java;  
+   They are interface, which extends GenericDao. This is for normal CRUD.
 
-3. In dao.hibernate package, add CategoryFirstLevelDaoHibernate.java and CategorySecondLevelDaoHibernate.java;
-   Use @Repository("<table_name>") before the class definition. 
+3. In dao.hibernate package, add CategoryFirstLevelDaoHibernate.java and CategorySecondLevelDaoHibernate.java;  
+   Use @Repository("<table_name>") before the class definition.   
    This is the Implementation of the interface above. 
 
-4. In service package, add CategoryManager.java
-   This is a interface. 
-   Use JAXRS annotations like @Path("<path>"), @GET, @PUT, @POST, @Consumes("application/json"), @Produces("application/json"). 
-   This is to define web service and HTTP methods handler. 
+4. In service package, add CategoryManager.java  
+   This is a interface.   
+   Use JAXRS annotations like @Path("<path>"), @GET, @PUT, @POST, @Consumes("application/json"), @Produces("application/json").  
+   This is to define web service and HTTP methods handler.  
    This is also to connect web service and DAO. 
 
-5. In service.impl package, add CategoryManagerImpl.java
-   Use JAXRS annotations like @Service("<service_manager>"), @WebService(serviceName="<service_name>"), @WebMethod.
-   This is the implementation of the interface above. 
+5. In service.impl package, add CategoryManagerImpl.java  
+   Use JAXRS annotations like @Service("<service_manager>"), @WebService(serviceName="<service_name>"), @WebMethod.  
+   This is the implementation of the interface above.   
 
 6. In WEB-INF folder, add one "serviceBean" to cxf-servlet.xml
 
